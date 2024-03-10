@@ -60,3 +60,14 @@ this option will change money from one account to another account
 
 <hr>
 
+7) OTHER THAN 6 IS FOR BANK EMPLOYEE
+
+this option is to stop services for maintance or to fill the amount
+
+<img src="./images/img10.png">
+<img src="./images/img11.png">
+
+these are the options avalable in the project 
+
+
+<p align="right">THANK YOU </p>

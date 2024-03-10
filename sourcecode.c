@@ -24,7 +24,6 @@
     int security_check(struct Customer[], int, int);
     int block_account(struct Customer[], int, int);
     void update_file(struct Customer[], int);
-    void check_attempts(struct Customer[], int, int, int);
     void welcome_message();
 
     int main(){
@@ -32,7 +31,7 @@
         
         FILE *file_pointer;
         
-        file_pointer = fopen("customer_info.txt", "r");
+        file_pointer = fopen("myfile.txt", "r");
         fscanf(file_pointer, "%d", &num_customers);
         fscanf(file_pointer, "%d", &master_password);
         struct Customer customers[num_customers+3];
@@ -129,7 +128,7 @@
                                 getch();
                                 system("cls");
                                 welcome_message();
-                                break;
+                                return 0;
                             } else {
                                 system("cls");
                                 welcome_message();
@@ -374,7 +373,6 @@
         system("cls");
         welcome_message();
         int i, login_id, login_pin;
-        check_attempts(customers, attempts, i, num_customers);
         printf("ENTER YOUR ACCOUNT NUMBER: ");
         scanf("%d", &login_id);
         for (i = 2; i < num_customers; i++) {
@@ -391,12 +389,17 @@
             else if (customers[i].password == 0)
                 return 0;    
             else {
-                printf("INCORRECT PIN. PLEASE TRY AGAIN....\n");
-                attempts++;
-                printf("PRESS ANY KEY TO CONTINUE");
-                getch();
-                security_check(customers, num_customers, attempts);
+            attempts++;
+            printf("INCORRECT PIN. PLEASE TRY AGAIN....\n");
+            if (attempts >= 3) {
+                printf("Maximum attempts reached. Your account has been blocked.\n");
+                block_account(customers, i, num_customers);
+                return 0; 
             }
+            printf("PRESS ANY KEY TO CONTINUE\n");
+            getch();
+            return security_check(customers, num_customers, attempts);
+        }
         }
     }
 
