@@ -11,7 +11,7 @@ The Functionalities in the program are
 5) TO CHECK BANK BALENCE
 6) TO TRANSFER MONEY FROM ONE ACCOUNT TO ANOTHER ACCOUNT 
 7) TO EMPLOYEE LOGIN(TO FILL AMOUNT/REPAIR ETC)
-
+<img src="img2.png">
 <hr>
 
 The main function is started by the employee that by entering the id and password for the machine 
@@ -19,7 +19,14 @@ The main function is started by the employee that by entering the id and passwor
 Employee can even open for fill the money or in the situation of maintance empoyee can stop the machine 
 
 the id and password are taken from the text file myfile.txt(first is employee id and second is password) which is in the repository
+<img src="img1.png">
 
 <hr>
+
+1) TO GENERATE PIN
+
+this function asks the account number (insted of card) if the account number exists then asks for phone number if it matches then give permetion for changing the code
+
+
 
 

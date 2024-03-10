@@ -147,8 +147,57 @@ void print_customer(struct Customer customers[], int i) {
     // Function implementation
 }
 
-void generate_pin(struct Customer customers[], int num_customers, int m) {
-    // Function implementation
+void generate_pin(struct Customer customers[], int num_customers, int counter) {
+    system("cls");
+    welcome_message();
+    int customer_id, index;
+    printf("ENTER YOUR CUSTOMER ID: ");
+    scanf("%d", &customer_id);
+    
+    // Find the index of the customer
+    for (index = 2; index < num_customers; index++) {
+        if (customers[index].id == customer_id) {
+            break;
+        }
+    }
+    
+    if (index == num_customers) {
+        printf("CUSTOMER NOT FOUND\n");
+        printf("PRESS ANY KEY TO CONTINUE\n");
+        getch();
+        return;
+    }
+    char num[15];
+    printf("ENTER YOUR PHONE NUMBER ACCORDING TO BANK");
+    scanf("%s",num);
+    for(int i=0;i<10;i++){
+        if(num[i]!=customers[index].phone[i]){
+            printf("ENTERED INVALID PHONE NUMBER");
+            generate_pin(customers,num_customers,counter);
+        }
+    }
+
+    int new_pin, confirm_pin;
+    printf("ENTER YOUR NEW FOUR DIGIT PIN: ");
+    scanf("%d", &new_pin);
+    printf("CONFIRM YOUR PIN: ");
+    scanf("%d", &confirm_pin);
+    
+    if (new_pin == confirm_pin) {
+        customers[index].password = new_pin;
+        printf("PROCESSING...\n");
+        sleep(1);
+        printf("PIN CREATED SUCCESSFULLY\n");
+        printf("THANK YOU\n");
+        printf("PRESS ANY KEY TO CONTINUE\n");
+        getch();
+        update_file(customers, num_customers);
+    } else {
+        printf("TWO PINS ARE DIFFERENT\nPLEASE TRY AGAIN\n");
+        printf("PRESS ANY KEY TO CONTINUE\n");
+        getch();
+        generate_pin(customers, num_customers, counter);
+    }
 }
 
 void block_card(struct Customer customers[], int num_customers, int m) {
@@ -180,7 +229,18 @@ int block_account(struct Customer customers[], int i, int num_customers) {
 }
 
 void update_file(struct Customer customers[], int num_customers) {
-    // Function implementation
+    FILE *file_pointer;
+    file_pointer = fopen("customer_info.txt", "w");
+    
+    fprintf(file_pointer, "%d\n", num_customers);
+    fprintf(file_pointer, "%d\n", customers[1].password); // Master password
+    
+    for (int i = 2; i < num_customers; i++) {
+        fprintf(file_pointer, "%d %d %s %d %s\n", customers[i].id, customers[i].password,
+                customers[i].phone, customers[i].total_amount, customers[i].name);
+    }
+    
+    fclose(file_pointer);
 }
 
 void check_attempts(struct Customer customers[], int m, int i, int num_customers) {
@@ -188,5 +248,17 @@ void check_attempts(struct Customer customers[], int m, int i, int num_customers
 }
 
 void welcome_message() {
-    // Function implementation
+   int i;
+    time_t t;
+    time(&t);
+    for (i = 2; i < 121; i++) {
+        printf("#");
+    }
+    printf("\t\t\t\t\tWELCOME TO XYZ ATM MACHINE\t\t\t\t%s", ctime(&t));
+    
+    for (i = 2; i < 122; i++) {
+        printf("#");
+    }
+    printf("\t\t\t\t\t\t\t\t IF ANY PROBLEM OCCURRED IN THIS MACHINE CALL: 9987543264\n");
 }
+
