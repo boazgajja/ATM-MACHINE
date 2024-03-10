@@ -27,8 +27,120 @@ void update_file(struct Customer[], int);
 void check_attempts(struct Customer[], int, int, int);
 void welcome_message();
 
-int main() {
-    // Main function implementation
+int main(){
+	int user_choice, num_customers, i, attempt_count = 0, master_password, entered_password, machine_password, counter = 0;
+	struct Customer customers[10];
+	FILE *file_pointer;
+	
+	file_pointer = fopen("customer_info.txt", "r");
+	fscanf(file_pointer, "%d", &num_customers);
+	fscanf(file_pointer, "%d", &master_password);
+	
+	for(i = 2; i < 16; i++) { 
+		fscanf(file_pointer, "%d%d%s%d%s", &customers[i].id, &customers[i].password, 
+			   customers[i].phone, &customers[i].total_amount, customers[i].name);
+	}
+	fclose(file_pointer);
+	
+	int menu_choice;
+	char entered_id[10];
+	welcome_message();
+	printf("ENTER ID:");
+	scanf("%s", entered_id);
+	printf("ENTER PASSWORD:");
+	scanf("%d", &entered_password);
+	
+	if(entered_password == master_password) {
+		system("cls");
+		welcome_message();
+		printf("LOGIN SUCCESSFUL\n");
+		sleep(1);
+		system("cls");
+		welcome_message();
+		while(1) {
+			print_customer(customers, num_customers);
+			printf("1 TO GENERATE PIN\n");
+			printf("2 TO BLOCK ATM CARD\n");
+			printf("3 TO DEPOSIT AMOUNT\n");
+			printf("4 TO WITHDRAW AMOUNT\n");
+			printf("5 TO CHECK YOUR BANK BALANCE\n");
+			printf("6 TO TRANSFER MONEY TO OTHER ACCOUNT\n");
+			printf("ENTER NUMBER: ");
+			scanf("%d", &menu_choice);
+			switch(menu_choice) {
+				case 1:
+					generate_pin(customers, num_customers, counter);
+					system("cls");
+					welcome_message();
+					break;
+				case 2:
+					block_card(customers, num_customers, counter);
+					system("cls");
+					welcome_message();
+					break;
+				case 3:
+					deposit_amount(customers, num_customers, counter);
+					system("cls");
+					welcome_message();
+					break;
+				case 4:
+					withdraw_amount(customers, num_customers, counter);
+					system("cls");
+					welcome_message();
+					break;
+				case 5:
+					check_balance(customers, num_customers, counter);
+					system("cls");
+					welcome_message();
+					break;
+				case 6:
+					transfer_money(customers, num_customers, counter);
+					system("cls");
+					welcome_message();
+					break;
+				default:
+					system("cls");
+					welcome_message();
+					printf("ENTER 1 TO FILL MONEY IN ATM MACHINE\n");
+					printf("ENTER 2 TO TURN OFF THIS MACHINE\n");
+					scanf("%d", &menu_choice);
+					if(menu_choice == 1) {
+						printf("ENTER YOUR PASSWORD:");
+						scanf("%d", &machine_password);
+						if(machine_password == entered_password) {
+							printf("MACHINE IS OPENED, FILL THE AMOUNT\a\n");
+							printf("PRESS ANY KEY TO CONTINUE");
+							getch();
+							system("cls");
+							welcome_message();
+							continue;
+						} else {
+							system("cls");
+							welcome_message();
+							continue;
+						}	
+					} else if(menu_choice == 2) {
+						printf("ENTER YOUR PASSWORD:");
+						scanf("%d", &machine_password);
+						if(machine_password == entered_password) {
+							printf("LOGGED OUT SUCCESSFULLY\n");
+							printf("PRESS ANY KEY TO CONTINUE");
+							getch();
+							system("cls");
+							welcome_message();
+							break;
+						} else {
+							system("cls");
+							welcome_message();
+							continue;
+						}	
+					}
+			}	
+		}
+	} else {
+		printf("INVALID ID OR PASSWORD");
+	}
+	return 0;
 }
 
 void print_customer(struct Customer customers[], int i) {
