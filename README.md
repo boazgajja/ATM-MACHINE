@@ -25,8 +25,38 @@ the id and password are taken from the text file myfile.txt(first is employee id
 
 1) TO GENERATE PIN
 
-this function asks the account number (insted of card) if the account number exists then asks for phone number if it matches then give permetion for changing the code
+this option asks the account number (insted of card) if the account number exists then asks for phone number if it matches then give permetion for changing the code
+<img src="./images/img3.png">
 
+2) TO BLOCK CARD
 
+this option blocks card by taking input as account number and password else if we type password more times worng the card has been blocked
 
+<img src="./images/img4.png">
+
+3) TO DIPOSIT MONEY
+
+this option add money to the customer account and prints the balence in the file 
+
+<img src="./images/img5.png">
+
+4) TO WITHDRAW MONEY
+
+this option will check either the entered money is in the account or not if it present the it will minus the amount and update the file
+
+<img src="./images/img6.png">
+
+5) TO CHECK BALENCE
+
+this option will display the balence in the account
+
+<img src="./images/img7.png">
+
+6) TO TRANSFER MONEY 
+
+this option will change money from one account to another account
+
+<img src="./images/img8.png">
+
+<hr>
 
